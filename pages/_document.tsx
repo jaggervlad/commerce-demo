@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
           {/* Hacer el manifiesto */}
           {/* <link href="/static/favicons/site.webmanifest" rel="manifest" /> */}
         </Head>
-        <body className="bg-white">
+        <body className="">
           <Main />
           <NextScript />
         </body>
