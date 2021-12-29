@@ -4,7 +4,7 @@ import { NextPage } from 'next';
 const TermsSalePage: NextPage = () => {
   return (
     <LayoutContainer>
-      <div className="max-w-7xl mx-auto px-8 py-4 md:px-4 ">
+      <div className="max-w-7xl mx-auto">
         <div className="prose prose sm:prose-lg md:prose-xl text-justify">
           <h2 className="text-center capitalize">Términos de venta</h2>
           <ol>

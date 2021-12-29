@@ -18,7 +18,7 @@ const GeoLocation: NextPage = () => {
   });
   return (
     <LayoutContainer>
-      <div className="w-full max-w-7xl mx-auto px-8">
+      <div className="w-full max-w-7xl mx-auto">
         <h2 className="text-2xl font-extrabold text-center mb-4">Ubicación</h2>
         {!isLoaded && <p>Map is Loading</p>}
         {loadError && <p>Error loading map</p>}

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer
       aria-labelledby="footer-heading"
-      className="max-w-7xl w-full px-4 sm:px-6 lg:px-8"
+      className="max-w-7xl w-full px-4 sm:px-6 lg:px-8 mt-auto"
     >
       <h2 id="footer-heading" className="sr-only">
         Footer
