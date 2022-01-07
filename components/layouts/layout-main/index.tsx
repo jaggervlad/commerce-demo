@@ -1,7 +1,6 @@
-import Head from 'next/head';
 import React from 'react';
-import Footer from '../../footer';
-import Header from '../../header';
+import { Footer } from 'components/footer';
+import { Header } from 'components/header';
 
 interface Props {}
 

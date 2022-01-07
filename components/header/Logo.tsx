@@ -6,17 +6,15 @@ interface Props {}
 
 const Logo: React.FC<Props> = () => {
   return (
-    <Link href="/">
-      <a>
-        <Image
-          layout="fill"
-          priority
-          src={'/images/Seacal.png'}
-          alt=""
-          className="object-cover object-center"
-        />
-      </a>
-    </Link>
+    <a className="h-8">
+      <Image
+        layout="fill"
+        priority
+        src={'/images/Seacal.png'}
+        alt=""
+        className="object-cover object-center"
+      />
+    </a>
   );
 };
 export default Logo;

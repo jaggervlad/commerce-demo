@@ -1,3 +1,5 @@
+import { Category } from '@chec/commerce.js/types/category';
+import { Product } from '@chec/commerce.js/types/product';
 import { FilterIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 
@@ -5,13 +7,19 @@ import Filter from './Filter';
 import MobileFilter from './MobileFilter';
 import ProductGrid from './ProductGrid';
 
-export default function ProductsView() {
+export default function ProductsView({
+  products,
+  categories,
+}: {
+  products: Product[];
+  categories: Category[];
+}) {
   const [open, setOpen] = useState(false);
 
   return (
     <div>
       {/* Mobile filter dialog */}
-      <MobileFilter open={open} setOpen={setOpen} />
+      <MobileFilter open={open} setOpen={setOpen} categories={categories} />
       <div className="max-w-7xl mx-auto">
         <div className="relative z-10 flex items-baseline justify-between mt-14 pb-6 border-b border-gray-200">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900">
@@ -37,10 +45,10 @@ export default function ProductsView() {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-10">
             {/* Filters  */}
-            <Filter />
+            <Filter categories={categories} />
 
             {/* Product grid */}
-            <ProductGrid />
+            <ProductGrid products={products} />
           </div>
         </section>
       </div>

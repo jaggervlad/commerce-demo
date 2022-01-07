@@ -6,7 +6,7 @@ interface Props {}
 
 const HeroSection: React.FC<Props> = () => {
   return (
-    <div className="relative py-40 px-6 sm:py-44 lg:py-52 sm:px-12 lg:px-16 w-full mb-8">
+    <div className="py-40 sm:py-44 lg:py-52 w-full mb-8">
       <div className="absolute inset-0 overflow-hidden ">
         <Image
           layout="fill"

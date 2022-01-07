@@ -1,10 +1,8 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Dispatch, Fragment, SetStateAction } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
-import { useRouter } from 'next/router';
-import clsx from 'clsx';
-import { isActive } from 'utils/isActiveRoute';
-import Link from 'next/link';
 
 const MobileMenu: React.FC<{
   open: boolean;
@@ -68,11 +66,9 @@ const MobileMenu: React.FC<{
                       {navigation.pages.map((page, i) => (
                         <Link href={page.href} key={i}>
                           <a
-                            className={clsx(
-                              '-m-2 p-2 block font-medium text-black hover:text-opacity-80 border-b-2',
-                              isActive(page.href, router) &&
-                                'underline decoration-4 underline-offset-4'
-                            )}
+                            className={
+                              '-m-2 p-2 block font-medium text-black hover:text-opacity-80 border-b-2'
+                            }
                           >
                             {page.name}
                           </a>

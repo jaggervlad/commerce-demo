@@ -1,13 +1,31 @@
+import Link from 'next/link';
+import clsx from 'clsx';
+import { useRouter } from 'next/router';
+import { Category } from '@chec/commerce.js/types/category';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import { MinusSmIcon, PlusSmIcon, XIcon } from '@heroicons/react/outline';
-import { Dispatch, Fragment, SetStateAction } from 'react';
+import { Dispatch, Fragment, SetStateAction, useEffect } from 'react';
 
-import { filters, subCategories } from './navigation';
+import { subCategories } from './navigation';
+import { isActive } from 'utils/isActiveRoute';
 
 const MobileFilter: React.FC<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-}> = ({ open, setOpen }) => {
+  categories: Category[];
+}> = ({ open, setOpen, categories }) => {
+  const router = useRouter();
+
+  const closeDialog = () => setOpen(false);
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', closeDialog);
+    return () => {
+      router.events.on('routeChangeStart', closeDialog);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -38,7 +56,8 @@ const MobileFilter: React.FC<{
         >
           <div className="ml-auto relative max-w-xs w-full h-full bg-white shadow-xl py-4 pb-12 flex flex-col overflow-y-auto">
             <div className="px-4 flex items-center justify-between">
-              <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+              <h2 className="sr-only">Filter</h2>
+              <div />
               <button
                 type="button"
                 className="-mr-2 w-10 h-10 bg-white p-2 rounded-md flex items-center justify-center text-gray-400"
@@ -55,70 +74,65 @@ const MobileFilter: React.FC<{
               <ul role="list" className="font-medium text-gray-900 px-2 py-3">
                 {subCategories.map((category) => (
                   <li key={category.name}>
-                    <a href={category.href} className="block px-2 py-3">
+                    <a
+                      href={category.href}
+                      className={clsx(
+                        'block px-2 py-3 hover:underline hover:underline-offset-8 hover:decoration-2 text-lg',
+                        isActive(category.href, router) &&
+                          'underline underline-offset-8 decoration-2'
+                      )}
+                    >
                       {category.name}
                     </a>
                   </li>
                 ))}
               </ul>
 
-              {filters.map((section) => (
-                <Disclosure
-                  as="div"
-                  key={section.id}
-                  className="border-t border-gray-200 px-4 py-6"
-                >
-                  {({ open }) => (
-                    <>
-                      <h3 className="-mx-2 -my-3 flow-root">
-                        <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500">
-                          <span className="font-medium text-gray-900">
-                            {section.name}
-                          </span>
-                          <span className="ml-6 flex items-center">
-                            {open ? (
-                              <MinusSmIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            ) : (
-                              <PlusSmIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            )}
-                          </span>
-                        </Disclosure.Button>
-                      </h3>
-                      <Disclosure.Panel className="pt-6">
-                        <div className="space-y-6">
-                          {section.options.map((option, optionIdx) => (
-                            <div
-                              key={option.value}
-                              className="flex items-center"
+              <Disclosure
+                as="div"
+                className="border-t border-gray-200 px-4 py-6"
+              >
+                {({ open }) => (
+                  <>
+                    <h3 className="-mx-2 -my-3 flow-root">
+                      <Disclosure.Button className="px-2 py-3 bg-white w-full flex items-center justify-between text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900 text-lg">
+                          Categorias
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          {open ? (
+                            <MinusSmIcon
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <PlusSmIcon
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </span>
+                      </Disclosure.Button>
+                    </h3>
+                    <Disclosure.Panel className="pt-6">
+                      <div className="space-y-6">
+                        {categories.map((option) => (
+                          <div key={option.id} className="flex items-center">
+                            <Link
+                              href={`/productos/${option.slug}`}
+                              as="/productos/[slug]"
                             >
-                              <input
-                                id={`filter-mobile-${section.id}-${optionIdx}`}
-                                name={`${section.id}[]`}
-                                defaultValue={option.value}
-                                type="checkbox"
-                                defaultChecked={option.checked}
-                                className="h-4 w-4 border-gray-300 rounded text-indigo-600 focus:ring-indigo-500"
-                              />
-                              <label
-                                htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
-                              >
-                                {option.label}
-                              </label>
-                            </div>
-                          ))}
-                        </div>
-                      </Disclosure.Panel>
-                    </>
-                  )}
-                </Disclosure>
-              ))}
+                              <a className="text-gray-800 text-md hover:underline hover:underline-offset-4 hover:decoration-2">
+                                {option.name}
+                              </a>
+                            </Link>
+                          </div>
+                        ))}
+                      </div>
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
             </form>
           </div>
         </Transition.Child>

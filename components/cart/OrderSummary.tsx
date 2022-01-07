@@ -1,9 +1,13 @@
-import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
+import { useCartState } from 'context/cart';
+import Link from 'next/link';
 import React from 'react';
+import { IoReturnDownBackOutline } from 'react-icons/io5';
 
 interface Props {}
 
 const OrderSummary: React.FC<Props> = () => {
+  const { subtotal, total_items } = useCartState();
+
   return (
     <section
       aria-labelledby="summary-heading"
@@ -15,46 +19,18 @@ const OrderSummary: React.FC<Props> = () => {
 
       <dl className="mt-6 space-y-4">
         <div className="flex items-center justify-between">
-          <dt className="text-sm text-gray-600">Subtotal</dt>
-          <dd className="text-sm font-medium text-gray-900">$99.00</dd>
+          <dt className="text-sm text-gray-600">Productos</dt>
+          <dd className="text-sm font-medium text-gray-900">{total_items}</dd>
         </div>
         <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-          <dt className="flex items-center text-sm text-gray-600">
-            <span>Estimado de envío</span>
-            <a
-              href="#"
-              className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">
-                Learn more about how shipping is calculated
-              </span>
-              <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
-          </dt>
-          <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-        </div>
-        <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-          <dt className="flex text-sm text-gray-600">
-            <span>Estimado de impuestos</span>
-            <a
-              href="#"
-              className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">
-                Learn more about how tax is calculated
-              </span>
-              <QuestionMarkCircleIcon className="h-5 w-5" aria-hidden="true" />
-            </a>
-          </dt>
-          <dd className="text-sm font-medium text-gray-900">$8.32</dd>
-        </div>
-        <div className="border-t border-gray-200 pt-4 flex items-center justify-between">
-          <dt className="text-base font-medium text-gray-900">Pedido Total</dt>
-          <dd className="text-base font-medium text-gray-900">$112.32</dd>
+          <dt className="text-base font-medium text-gray-900">Total</dt>
+          <dd className="text-base font-medium text-gray-900">
+            {subtotal?.formatted_with_symbol}
+          </dd>
         </div>
       </dl>
 
-      <div className="mt-6">
+      <div className="mt-6 space-y-6">
         <button
           type="submit"
           className="w-full bg-blue-600 shadow-lg shadow-blue-500/50 border border-transparent 
@@ -63,6 +39,12 @@ const OrderSummary: React.FC<Props> = () => {
         >
           Proceder a pagar
         </button>
+        <Link href="/productos">
+          <a className="inline-flex items-center justify-center gap-2 w-full text-blue-600 text-lg font-medium">
+            Seguir comprando
+            <IoReturnDownBackOutline />
+          </a>
+        </Link>
       </div>
     </section>
   );
