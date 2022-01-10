@@ -1,18 +1,11 @@
 import { createContext, useReducer, useEffect, useContext } from 'react';
 import { commerce } from 'lib/commerce';
-import { LineItem } from '@chec/commerce.js/types/line-item';
 import { Cart } from '@chec/commerce.js/types/cart';
 
 interface CartDispatch {
   setCart: (payload: Cart) => Promise<void>;
   reset: () => Promise<void>;
 }
-
-// type CartState = {
-//   total_items: number;
-//   total_unique_items: number;
-//   line_items: LineItem[];
-// };
 
 type CartAction =
   | { type: 'SET_CART'; payload: Cart }

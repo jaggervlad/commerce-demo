@@ -31,14 +31,15 @@ const OrderSummary: React.FC<Props> = () => {
       </dl>
 
       <div className="mt-6 space-y-6">
-        <button
-          type="submit"
-          className="w-full bg-blue-600 shadow-lg shadow-blue-500/50 border border-transparent 
+        <Link href="/checkout">
+          <a
+            className="w-full block text-center bg-blue-600 shadow-lg shadow-blue-500/50 border border-transparent 
           rounded-md py-3 px-4 text-base font-medium text-white hover:bg-blue-700 
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500"
-        >
-          Proceder a pagar
-        </button>
+          >
+            Ir a checkout
+          </a>
+        </Link>
         <Link href="/productos">
           <a className="inline-flex items-center justify-center gap-2 w-full text-blue-600 text-lg font-medium">
             Seguir comprando

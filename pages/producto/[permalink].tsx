@@ -30,7 +30,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const ProductPage: NextPage<{ product: Product }> = ({ product }) => {
-  console.log({ product });
   return (
     <LayoutContainer>
       <ProductView product={product} />

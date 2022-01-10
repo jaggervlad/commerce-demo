@@ -6,8 +6,11 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { ToastContainer, ToastContainerProps } from 'react-toastify';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 import { CartProvider } from 'context/cart';
+import { CheckoutProvider } from 'context/checkout';
 
 const toastOpts: ToastContainerProps = {
   position: 'bottom-center',
@@ -17,6 +20,10 @@ const toastOpts: ToastContainerProps = {
   toastClassName:
     'bg-blue-600 rounded-lg text-white px-3 shadow-lg shadow-blue-500/50',
 };
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
@@ -30,10 +37,14 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <CartProvider>
-        <Component {...pageProps} key={router.route} />
-        <ToastContainer {...toastOpts} />
-      </CartProvider>
+      <Elements stripe={stripePromise}>
+        <CartProvider>
+          <CheckoutProvider>
+            <Component {...pageProps} key={router.route} />
+          </CheckoutProvider>
+          <ToastContainer {...toastOpts} />
+        </CartProvider>
+      </Elements>
     </>
   );
 }
